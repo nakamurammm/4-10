@@ -1,23 +1,35 @@
- <% if flash[:notice] %>
-   <p id="notice">
-    <font color="green">
-       <%= flash[:notice] %>
-    </font>
-   </p>
-   <% end %>
+<p id="notice"></p>
 
-<h2>Book detail</h2>
-  <table>
-    <tr>
-      <td></td>
-      <td><%= @book.title %></td>
-      <td><%= @book.body %></td>
-      <td>Edit</a></td>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"><%= render 'books/list', book: @newbook, user: @user %>
+        </div>
+           <div class="col-md-8 offset-md-1">
 
-      <td>
-      <%= link_to "destroy", book_path(@book), method: :delete,data: { confirm: '本当に消しますか？' } %>
-      </td>
-    </tr>
-  </table>
+             <h2>Book detail</h2>
+             <table class="table">
 
-<a class="back" href="/books">Back</a>
+               <tbody>
+                 <tr>
+                   <td><%= attachment_image_tag @user, :profile_image, format: 'jpeg', fallback: "no_image.jpg", size: "40x40" %>
+
+                   </td>
+                   <td><%= @book.title %></td>
+                   <td><%= @book.body %></td>
+
+                   <% if current_user == @book.user %>
+
+                   <td><%= link_to "Edit", edit_book_path(@book.id), class: "btn btn-success edit_book_path" %></td>
+                   <td>
+                     <%= link_to "Destroy", book_path(@book), method: :delete,data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+                   </td>
+                   <td></td>
+                 </tr>
+               </tbody>
+               <% end %>
+             </table>
+
+
+           </div>
+    </div>
+</div>
